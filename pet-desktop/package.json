@@ -1,0 +1,13 @@
+{
+  "name": "dsh-pet-desktop",
+  "version": "0.1.0",
+  "description": "Always-on-top desktop pet for the DeepSeek Harness (loads the harness /pet page)",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^33.2.0"
+  }
+}

@@ -1,0 +1,11 @@
+# Dependencies (the root node_modules is a symlink to the profile's deps,
+# and pet-desktop vendors Electron — neither belongs in version control).
+node_modules
+pet-desktop/node_modules
+
+# OS / editor noise
+.DS_Store
+*.log
+npm-debug.log*
+
+# Local runtime data (kept under ~/.dsh/storages, never committed)

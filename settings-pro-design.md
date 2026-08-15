@@ -49,12 +49,12 @@
 - **自动捕获（已实现）**：订阅 `session/event`，对 `user/message` 且 `source.kind === "user"`（直接人类消息，排除 goal-round/agent-inject 等合成消息）抽取文本、截断 500 字符追加为 note（`registerMemoryCapture`）；记忆 tab 每 5s 轮询刷新。LLM 摘要生成仍为可选后续增强。
 
 ## 5c. 记忆存储架构（2026-08-15 重构，已实现）
-- **按用户隔离**：记忆按 user key 分目录 `memory/<userKey>/`，`owner` 为 web 主人（及任何无绑定的会话），IM 对端为 `telegram:<peerId>` / `wechat:<peerId>`（由 bridge 在创建 agent 时 `UserRegistry.bind(sessionId, userKey)` 绑定，进程内）。注入（`systemPrompt.context` 的 `text(context)` 用 `context.agent.id`）、捕获（`session.id`）、工具（`exec.agent.id`）三处都用同一 `UserRegistry` 解析用户，杜绝 IM 对话串记忆。
-- **按日期分文件**：每个用户目录下 `YYYY-MM-DD.json`（每日一条 note 数组）+ `summary.json`（滚动摘要）。
-- **大小控制（不丢信息也不膨胀）**：单日最多 `MAX_NOTES_PER_DAY=100` 条、单条截断 `MAX_NOTE_CHARS=500`；超限时把**最旧**的 note 折进 `digest`（压缩块，`MAX_DIGEST_CHARS=4000`，保留尾部）而非删除；另有字节上限 `MAX_DAY_BYTES=256KB` 兜底。注入到 prompt 的文本受 `INJECT_BUDGET_CHARS=4000` + 最近 `MAX_INJECT_NOTES=20` 条约束。
-- **导出为带日期 md**：`GET /settings-pro/memory/export.md?user=` 返回 `text/markdown`，`content-disposition: memory-<user>-<YYYY-MM-DD>.md`，内容含摘要 + 按日分节 + 合并块。
-- **新建/编辑落位**：UI 记忆 tab 提供用户下拉、摘要编辑（`POST /settings-pro/memory/summary`）、添加记录（`POST /settings-pro/memory/note`）、清空（`POST /settings-pro/memory/clear`）；`write_memory` 工具仍可用。
-- **旧数据迁移**：首次启动把旧 `memory.json` 一次性迁入 `memory/owner/`，原文件留 `.bak` 后删除。
+- **跨通道共享（不按用户隔离）**：所有通道（web 主人、Telegram、微信）读写同一份记忆，助手跨通道互相记得做过什么；「同时多对话不串」由 IM bridge 的**按 peer 路由**保证（每个 peer 独立 agent/session），记忆本身全局共享。
+- **按日期分文件**：`memory/YYYY-MM-DD.json`（每日一条 note 数组）+ `memory/summary.json`（滚动摘要）。
+- **大小控制（不丢信息也不膨胀）**：单日最多 `MAX_NOTES_PER_DAY=100` 条、单条截断 `MAX_NOTE_CHARS=500`；超限时把**最旧**的 note 折进 `digest`（压缩块，`MAX_DIGEST_CHARS=4000`，保留尾部）而非删除；另有字节上限 `MAX_DAY_BYTES=256KB` 兜底。注入到 prompt 的文本受 `INJECT_BUDGET_CHARS=4000` + 最近 `MAX_INJECT_NOTES=20` 条约束（按 ts 倒序取最新）。
+- **导出为带日期 md**：`GET /settings-pro/memory/export.md` 返回 `text/markdown`，`content-disposition: memory-<YYYY-MM-DD>.md`，内容含摘要 + 按日分节 + 合并块。
+- **新建/编辑落位**：UI 记忆 tab 提供摘要编辑（`POST /settings-pro/memory/summary`）、添加记录（`POST /settings-pro/memory/note`）、清空（`POST /settings-pro/memory/clear`）；`write_memory` 工具仍可用。
+- **旧数据迁移**：首次启动把旧 `memory.json` 与 `memory/<userKey>/`（v1/v2）一次性合并进扁平 `memory/`，原 `memory.json` 留 `.bak`，旧用户子目录删除。
 
 ## 5b. 工具注册（技术方案已核实）
 - API：`ctx.tools.register(defineTool({...}))`，`inject:["tools"]`；`defineTool(options)` 编译 `parameters` DSL 为 JSON Schema 并校验。

@@ -61,6 +61,6 @@ The `*Enabled` config keys (`usageEnabled`, `memoryEnabled`, `petsEnabled`, `vis
 
 ## Notes
 
-- **Usage auto-sync reads a Chromium browser session** (Chrome / Edge / Brave / Arc / Opera on macOS / Windows / Linux) to backfill official billed usage. Firefox / Safari aren't supported — paste the `userToken` manually from platform.deepseek.com instead.
+- **Usage auto-sync reads a Chromium browser session** (Chrome / Edge / Brave / Arc / Opera on macOS / Windows / Linux) to backfill official billed usage. Firefox / Safari aren't supported.
 - **Pet desktop app is not bundled.** The default "browser" open mode opens `/pet` in a browser tab with no extra install. The "app" mode needs the separate Electron desktop-pet app (the `pet-desktop/` folder in the source repo), which is not part of the npm package.
 - **The online pet library fetches from GitHub** — the [Awesome Codex Pet](https://codexpet.top) community gallery by [@legeling](https://github.com/legeling/awesome-codex-pet). Its code is MIT; the pet assets are **CC BY-NC 4.0 (non-commercial)** by default, with each pet's own license shown on its card (some are MIT / CC BY, some stricter personal-use terms). Thanks to that project and every pet author for the open submissions. It caches locally and degrades to the cache/offline notice on network failure.

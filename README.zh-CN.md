@@ -51,7 +51,7 @@ agent 会安装包、写好 patch、只把你点名的 `*Enabled` 键设为开�
 
 | 功能 | 作用 | 开启方式 |
 |---|---|---|
-| **用量** | DeepSeek 余额 + 每日成本/tokens（峰谷计价） | 设置 Pro → **用量** → 开关 |
+| **用量** | DeepSeek 余额 + 官方计费的每日成本/tokens（峰谷计价） | 设置 Pro → **用量** → 开关 |
 | **记忆** | 跨重启记忆 + `read_memory` / `write_memory` 工具 | 设置 Pro → **记忆** → 开关 |
 | **宠物** | 跟随对话的桌面宠物 | 设置 Pro → **宠物** → 开关 |
 | **视觉** | 在纯文本模型看图片前，先用任意 OpenAI 兼容 VLM 描述图片 | 设置 Pro → **视觉** → 启用 + 选模型 |
@@ -63,4 +63,4 @@ agent 会安装包、写好 patch、只把你点名的 `*Enabled` 键设为开�
 
 - **用量「自动同步」读取 Chromium 浏览器会话**（macOS / Windows / Linux 上的 Chrome / Edge / Brave / Arc / Opera）来同步官方计费用量；Firefox / Safari 不支持。
 - **桌面宠物 App 不随包分发。** 默认「网页」打开模式在浏览器标签页打开 `/pet`，无需额外安装；「App」模式需要另行安装独立的 Electron 桌面宠物应用（源码仓库里的 `pet-desktop/` 目录），npm 包不包含它。
-- **在线宠物库从 GitHub 拉取**——[Awesome Codex Pet](https://codexpet.top) 社区画廊，作者 [@legeling](https://github.com/legeling/awesome-codex-pet)。其代码为 MIT；宠物素材默认 **CC BY-NC 4.0（非商业）**，具体以每只宠物卡片上显示的 license 为准（少数为 MIT / CC BY，部分为更严格的个人非商用条款）。感谢该项目及每一位宠物作者的开放投稿。本地有缓存，网络失败时回退到缓存/离线提示。
+- **在线宠物库从 GitHub 拉取**——[Awesome Codex Pet](https://codexpet.top) 社区画廊，作者 [@legeling](https://github.com/legeling/awesome-codex-pet)。感谢该项目及每一位宠物作者的开放投稿。本地有缓存，网络失败时回退到缓存/离线提示。

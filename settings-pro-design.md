@@ -1,7 +1,7 @@
 # settings-pro 插件设计方案（草案）
 
 > 状态：实现完成，web 端联调验证已通过（见 §9）。剩余：用户在浏览器目视核对设置页「设置 Pro」四个 tab 的展示与交互。
-> 目标：**单包 `@kazecreator/dsh-settings-pro`**，四个子功能全部内置：① IM Bridge（Telegram/微信）② DeepSeek 用量 ③ 记忆 ④ 宠物。`dsh-im` 已合并进本包、后续归档。
+> 目标：**单包 `@kazecreator/dsh-settings-pro`**，四个子功能全部内置：① IM Bridge（Telegram/微信）② DeepSeek 用量 ③ 记忆 ④ 宠物。IM 桥接原为独立包 `dsh-im`，已合并进本包并归档（不再双线维护）。
 
 ## 0. 已确认的需求
 - pets = 桌面宠物（预设 + 自定义），守护进程后台跟进对话、web 端显示进度。
@@ -22,11 +22,11 @@
 ## 2. 设置页展示与排序（已核实底层机制）
 - 设置页导航由 client 插槽 `settings.section` 承载，每个分区注册 `{ name:"settings.section", id, order, label }` + 一个 React 组件。
 - 现有 order 占用：`general`=0、`models`=10、`plugins`=15。**「设置 Pro」插在 order=20**：`通用(0) → 模型(10) → 插件(15) → 设置 Pro(20)`。
-- 「设置 Pro」分区内部用**标签页**：`用量(0) / 记忆(10) / 宠物(20) / IM Bridge(100)`。前三个是内置 tab，IM Bridge 是 dsh-im 通过子插槽 `settings-pro.tab` 贡献的 tab（分区用 `children: { "settings-pro.tab": {kind:"list",scope:"root"} }` 声明，组件读 `ctx.slots.entries("settings-pro.tab")` 渲染）。
-- 每个 tab 是**自定义 React 组件**（用 `@deepseek-ai/dsh-client-ui-primitives` 的 `Input/Button` 等，参照 dsh-im 的 `client.js`），**不是 schema-form**（schema-form 只是 rehydrate/校验，无通用渲染器）。
+- 「设置 Pro」分区内部用**标签页**：`用量(0) / 记忆(10) / 宠物(20) / IM Bridge(100)`。前三个是内置 tab，IM Bridge 同为内置 tab（并入前由独立包经子插槽 `settings-pro.tab` 贡献；分区用 `children: { "settings-pro.tab": {kind:"list",scope:"root"} }` 声明，组件读 `ctx.slots.entries("settings-pro.tab")` 渲染）。
+- 每个 tab 是**自定义 React 组件**（用 `@deepseek-ai/dsh-client-ui-primitives` 的 `Input/Button` 等，沿用并入前的 `client.js` 模式），**不是 schema-form**（schema-form 只是 rehydrate/校验，无通用渲染器）。
 - 图标：shell 按 `id` 硬编码 `navIcon(id)`，未知 id 回落齿轮 —— 新分区默认显示齿轮，可接受（不强行改 shell）。
 
-## 3. 打包结构（对照 dsh-im 已验证的模式）
+## 3. 打包结构（沿用并入前已验证的模式）
 - `package.json`：`type:module`、`main/exports`、`dsh.client = { platform:"web", inject:[...] }`、`peerDependencies` 声明 cordis/schemastery/dsh-*。
 - 服务端入口 `lib/index.js`：导出 `{ name, inject, Config, apply }`；`apply(ctx, config)` 里通过 `ctx.get("loader").await()` 等 loader 就绪后再启动。
 - 客户端入口 `lib/client.js`：`window.__ModuleLoader__.load({ id, factory })`，`apply(ctx)` 里 `ctx.slots.inject("settings.section", ...)`。
@@ -88,4 +88,4 @@
 - 用量持久化：`~/.dsh/storages/dsh-settings-pro/usage/2026-08-15.json` 实时累计 token 并按峰谷计价。
 - 记忆持久化：`~/.dsh/storages/dsh-settings-pro/memory.json`，`write_memory`/`read_memory` 往返正常，`systemPrompt` context 注入正常。
 - 宠物守护：`petsEnabled` 已由运行时配置（`~/.dsh/storages/dsh-settings-pro/config.json`）持久化为 `true`，guardian 正在对 3 个 agent 挂目标（含本会话的 `<goal_round>`，验证了 `ctx.goals` + goal-round-driver 链路）。
-- 测试：`test-plugin-apply.mjs`（已改为 hermetic，临时 `$DSH_HOME`）与 `test-markdown.mjs`（导入路径由已归档的 `dsh-im` 改为 `dsh-settings-pro`）均通过。markdown 29 样例中 4 个「flagged」经核对均为误报（代码块内反引号/星号被保留、数学星号未误判为强调、>4096 长文本由 telegram 发送端 `splitPlainText` 拆分，均非转换器缺陷）。
+- 测试：`test-plugin-apply.mjs`（已改为 hermetic，临时 `$DSH_HOME`）与 `test-markdown.mjs`（导入路径已改为 `dsh-settings-pro`）均通过。markdown 29 样例中 4 个「flagged」经核对均为误报（代码块内反引号/星号被保留、数学星号未误判为强调、>4096 长文本由 telegram 发送端 `splitPlainText` 拆分，均非转换器缺陷）。

@@ -55,12 +55,13 @@ The agent installs the package, writes the patch, sets exactly the `*Enabled` ke
 | **Memory** | Cross-restart memory + `read_memory` / `write_memory` tools | Settings Pro → **Memory** → toggle |
 | **Pets** | Desktop pet that follows conversations | Settings Pro → **Pets** → toggle |
 | **Vision** | Describe images via any OpenAI-compatible VLM before a text-only model sees them | Settings Pro → **Vision** → enable + pick model |
-| **IM Bridge** | Telegram & WeChat bridge (merged from `@kazecreator/dsh-im`, archived) | Settings Pro → **IM Bridge** → token / QR |
+| **IM Bridge** | Telegram & WeChat bridge (built-in) | Settings Pro → **IM Bridge** → token / QR |
 
 The `*Enabled` config keys (`usageEnabled`, `memoryEnabled`, `petsEnabled`, `visionEnabled`, `telegramEnabled`, `wechatEnabled`) also work as install-time defaults if you want to pre-enable something for a profile.
 
 ## Notes
 
+- **Updates:** Settings Pro checks the npm registry at startup and when the settings section opens. When a newer version exists, a banner in **Settings Pro → top** offers **Update & Restart** (runs `pnpm add @kazecreator/dsh-settings-pro@latest` in the profile and relaunches the dsh process). If the plugin is installed as a `file:` link (local development checkout), the button is hidden and a note explains that updates are manual.
 - **Usage auto-sync reads a Chromium browser session** (Chrome / Edge / Brave / Arc / Opera on macOS / Windows / Linux) to backfill official billed usage. Firefox / Safari aren't supported.
 - **Pet desktop app is not bundled.** The default "browser" open mode opens `/pet` in a browser tab with no extra install. The "app" mode needs the separate Electron desktop-pet app (the `pet-desktop/` folder in the source repo), which is not part of the npm package.
 - **The online pet library fetches from GitHub** — the [Awesome Codex Pet](https://codexpet.top) community gallery by [@legeling](https://github.com/legeling/awesome-codex-pet). Thanks to that project and every pet author for the open submissions. It caches locally and degrades to the cache/offline notice on network failure.

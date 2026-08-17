@@ -55,12 +55,13 @@ agent 会安装包、写好 patch、只把你点名的 `*Enabled` 键设为开�
 | **记忆** | 跨重启记忆 + `read_memory` / `write_memory` 工具 | 设置 Pro → **记忆** → 开关 |
 | **宠物** | 跟随对话的桌面宠物 | 设置 Pro → **宠物** → 开关 |
 | **视觉** | 在纯文本模型看图片前，先用任意 OpenAI 兼容 VLM 描述图片 | 设置 Pro → **视觉** → 启用 + 选模型 |
-| **IM Bridge** | Telegram & 微信桥接（并入自 `@kazecreator/dsh-im`，已归档） | 设置 Pro → **IM Bridge** → token / 扫码 |
+| **IM Bridge** | Telegram & 微信桥接（内置） | 设置 Pro → **IM Bridge** → token / 扫码 |
 
 `*Enabled` 配置键（`usageEnabled`、`memoryEnabled`、`petsEnabled`、`visionEnabled`、`telegramEnabled`、`wechatEnabled`）也能作为安装时的初始状态，想给某个 profile 预开启某项时用。
 
 ## 说明
 
+- **更新**：插件启动时与设置页打开时检查 npm registry；发现新版本时，设置 Pro 顶部显示横幅，提供「更新并重启」按钮（在 profile 目录执行 `pnpm add @kazecreator/dsh-settings-pro@latest` 并重启 dsh 进程）。若插件以 `file:` 链接安装（本地开发目录），按钮隐藏并提示手动更新。
 - **用量「自动同步」读取 Chromium 浏览器会话**（macOS / Windows / Linux 上的 Chrome / Edge / Brave / Arc / Opera）来同步官方计费用量；Firefox / Safari 不支持。
 - **桌面宠物 App 不随包分发。** 默认「网页」打开模式在浏览器标签页打开 `/pet`，无需额外安装；「App」模式需要另行安装独立的 Electron 桌面宠物应用（源码仓库里的 `pet-desktop/` 目录），npm 包不包含它。
 - **在线宠物库从 GitHub 拉取**——[Awesome Codex Pet](https://codexpet.top) 社区画廊，作者 [@legeling](https://github.com/legeling/awesome-codex-pet)。感谢该项目及每一位宠物作者的开放投稿。本地有缓存，网络失败时回退到缓存/离线提示。

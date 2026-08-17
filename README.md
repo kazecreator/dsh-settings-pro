@@ -29,7 +29,7 @@ dsh plugin --profile <name> add @kazecreator/dsh-settings-pro
 
 ## Install & enable with one prompt
 
-DSH's agent has file access, so you don't have to install or edit anything by hand — paste one prompt and it does both steps. Replace the `[...]` list with the features you want:
+This replaces the whole [Quick start](#quick-start) above — you do **not** need to do those steps first. DSH's agent has file access, so just paste one prompt and it does both install and enable for you. Replace the `[...]` list with the features you want:
 
 ```text
 Install the @kazecreator/dsh-settings-pro plugin into this DSH profile and enable these features: [usage, memory, pets, vision, telegram, wechat]. Keep anything I didn't list disabled.

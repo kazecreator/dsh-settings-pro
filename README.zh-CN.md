@@ -29,7 +29,7 @@ dsh plugin --profile <name> add @kazecreator/dsh-settings-pro
 
 ## 一段 prompt 完成安装 + 开启功能
 
-DSH 的 agent 有文件读写权限，所以你不用手动安装或改任何文件——直接粘贴下面这段 prompt，把 `[...]` 换成你想要的功能即可，安装和开启它都会帮你做完：
+这段 prompt 完全替代上面的[「快速上手」](#快速上手)——**不需要**先做那几步。DSH 的 agent 有文件读写权限，直接粘贴下面这段 prompt，把 `[...]` 换成你想要的功能即可，安装和开启它都会帮你做完：
 
 ```text
 把 @kazecreator/dsh-settings-pro 插件安装进这个 DSH profile，并开启这些功能：[用量, 记忆, 宠物, 视觉, telegram, wechat]。我没列出的功能一律保持关闭。

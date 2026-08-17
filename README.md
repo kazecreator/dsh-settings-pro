@@ -1,12 +1,14 @@
 # @kazecreator/dsh-settings-pro
 
-DeepSeek Harness settings-pro plugin. A single package bundling five features into a "设置 Pro" settings section:
+[English](README.md) · [中文](README.zh-CN.md)
+
+DeepSeek Harness **Settings Pro** plugin. A single package bundling five features into one settings section:
 
 - **IM Bridge** — Telegram & WeChat bridge (merged from `@kazecreator/dsh-im`, now archived), with a built-in `IM Bridge` tab.
-- **用量 (Usage)** — DeepSeek balance via `/user/balance` + platform-billed daily usage with peak/off-peak pricing.
-- **记忆 (Memory)** — cross-restart conversation memory: summary auto-injected into new sessions + `read_memory`/`write_memory` tools.
-- **宠物 (Pets)** — desktop pet overlay + passive progress monitor that follows conversations when enabled.
-- **视觉 (Vision)** — describe images via any OpenAI-compatible VLM before a text-only model sees them.
+- **Usage** — DeepSeek balance via `/user/balance` + platform-billed daily usage with peak/off-peak pricing.
+- **Memory** — cross-restart conversation memory: summary auto-injected into new sessions + `read_memory`/`write_memory` tools.
+- **Pets** — desktop pet overlay + passive progress monitor that follows conversations when enabled.
+- **Vision** — describe images via any OpenAI-compatible VLM before a text-only model sees them.
 
 ## Everything is off by default
 
@@ -21,7 +23,7 @@ A fresh install enables **nothing** until you opt in, feature by feature. This i
 | Telegram | `telegramEnabled` + `telegramBotToken` | panel (persisted) | no |
 | WeChat | `wechatEnabled` | panel scan (persisted) | no |
 
-All six are toggled live from the "设置 Pro" panel in the Web GUI — no `cordis.patch.yml` editing or restart required. The `*Enabled` config keys still work as the initial (install-time) state if you want to pre-enable a feature for a profile.
+All six are toggled live from the **Settings Pro** panel in the Web GUI — no `cordis.patch.yml` editing or restart required. The `*Enabled` config keys still work as the initial (install-time) state if you want to pre-enable a feature for a profile.
 
 ## Install
 
@@ -44,11 +46,11 @@ Optionally pre-enable a feature at install time:
 
 ## Enable one feature at a time
 
-1. **Usage** — flip the toggle in "设置 Pro → 用量". Without `DEEPSEEK_API_KEY` configured the panel still loads and reports "未配置 DEEPSEEK_API_KEY" rather than failing.
-2. **Memory** — flip the toggle in "设置 Pro → 记忆". `read_memory`/`write_memory` tools activate and the "记忆" tab populates.
-3. **Pets** — flip the toggle in "设置 Pro → 宠物". Install built-in / Codex / zip pets.
-4. **Vision** — flip "启用" in "设置 Pro → 视觉", pick a provider/model, save.
-5. **IM Bridge** — in "设置 Pro → IM Bridge", paste a Telegram bot token (connect) and scan the WeChat QR (connect). Each channel stays inert until its token/scan is present.
+1. **Usage** — flip the toggle in **Settings Pro → Usage**. Without `DEEPSEEK_API_KEY` configured, the panel still loads and reports "DEEPSEEK_API_KEY not configured" rather than failing.
+2. **Memory** — flip the toggle in **Settings Pro → Memory**. The `read_memory`/`write_memory` tools activate and the Memory tab populates.
+3. **Pets** — flip the toggle in **Settings Pro → Pets**. Install built-in / Codex / zip pets.
+4. **Vision** — flip **Enable** in **Settings Pro → Vision**, pick a provider/model, save.
+5. **IM Bridge** — in **Settings Pro → IM Bridge**, paste a Telegram bot token (connect) and scan the WeChat QR (connect). Each channel stays inert until its token/scan is present.
 
 ## Notes
 

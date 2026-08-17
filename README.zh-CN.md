@@ -63,4 +63,4 @@ agent 会安装包、写好 patch、只把你点名的 `*Enabled` 键设为开�
 
 - **用量「自动同步」读取 Chromium 浏览器会话**（macOS / Windows / Linux 上的 Chrome / Edge / Brave / Arc / Opera）来同步官方计费用量；Firefox / Safari 不支持，请从 platform.deepseek.com 手动粘贴 `userToken`。
 - **桌面宠物 App 不随包分发。** 默认「网页」打开模式在浏览器标签页打开 `/pet`，无需额外安装；「App」模式需要另行安装独立的 Electron 桌面宠物应用（源码仓库里的 `pet-desktop/` 目录），npm 包不包含它。
-- **在线宠物库从 GitHub 拉取**（`awesome-codex-pet`），本地有缓存，网络失败时回退到缓存/离线提示。
+- **在线宠物库从 GitHub 拉取**——[Awesome Codex Pet](https://codexpet.top) 社区画廊，作者 [@legeling](https://github.com/legeling/awesome-codex-pet)。感谢该项目及每一位宠物作者的开放投稿。本地有缓存，网络失败时回退到缓存/离线提示。

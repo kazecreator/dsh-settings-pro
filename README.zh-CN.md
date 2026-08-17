@@ -6,7 +6,15 @@ DeepSeek Harness「设置 Pro」插件——一个包、五个功能：**IM Brid
 
 ## 快速上手
 
-1. 在 `cordis.patch.yml` 里挂载插件：
+1. 把包安装进 profile：
+
+```bash
+dsh plugin --profile <name> add @kazecreator/dsh-settings-pro
+```
+
+`<name>` 是 profile 名（Web GUI 对应 `web`）；该命令会在 profile 目录里转发给 pnpm。
+
+2. 在 `cordis.patch.yml` 里挂载插件：
 
 ```yaml
 - insert:
@@ -15,7 +23,29 @@ DeepSeek Harness「设置 Pro」插件——一个包、五个功能：**IM Brid
       config: {}
 ```
 
-2. 打开 Web GUI →「设置 Pro」，把想要的功能打开即可——可以全开、开几个、或只开一个。默认全关，开了才运行，而且所有开关都是即时生效（无需重启）。
+3. 重启 DSH，让新插件加载。
+
+4. 打开 Web GUI →「设置 Pro」，把想要的功能打开即可——可以全开、开几个、或只开一个。默认全关，开了才运行，而且所有开关都是即时生效（无需重启）。
+
+## 一段 prompt 完成安装 + 开启功能
+
+DSH 的 agent 有文件读写权限，所以你不用手动安装或改任何文件——直接粘贴下面这段 prompt，把 `[...]` 换成你想要的功能即可，安装和开启它都会帮你做完：
+
+```text
+把 @kazecreator/dsh-settings-pro 插件安装进这个 DSH profile，并开启这些功能：[用量, 记忆, 宠物, 视觉, telegram, wechat]。我没列出的功能一律保持关闭。
+
+1. 安装包：在 profile 目录里运行 `dsh plugin --profile <profile> add @kazecreator/dsh-settings-pro`（或 `pnpm add @kazecreator/dsh-settings-pro`）。
+2. 在该 profile 的 `cordis.patch.yml` 里加一条 `insert`，插件 id 为 `dsh-settings-pro`（name 为 `@kazecreator/dsh-settings-pro`），并在其 `config` 里只开启我指定的功能：
+   - 用量     → `usageEnabled: true`
+   - 记忆     → `memoryEnabled: true`
+   - 宠物     → `petsEnabled: true`
+   - 视觉     → `visionEnabled: true`（还需 `visionBaseUrl`、`visionModel`、`visionApiKeyEnv`——如果我没给，就向我询问）
+   - telegram → `telegramEnabled: true`（还需 `telegramBotToken`、`telegramAllowedUserIds`——如果我没给，就向我询问）
+   - wechat   → `wechatEnabled: true`
+3. 重启 DSH，让新插件加载。
+```
+
+agent 会安装包、写好 patch、只把你点名的 `*Enabled` 键设为开启，其余全部关闭。重启后功能即生效；之后你仍可随时在「设置 Pro」里实时切换任意开关。
 
 ## 功能一览
 

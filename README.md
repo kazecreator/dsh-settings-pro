@@ -6,7 +6,15 @@ DeepSeek Harness **Settings Pro** plugin — one package, five features: **IM Br
 
 ## Quick start
 
-1. Mount the plugin in `cordis.patch.yml`:
+1. Install the package into the profile:
+
+```bash
+dsh plugin --profile <name> add @kazecreator/dsh-settings-pro
+```
+
+`<name>` is the profile name (`web` for the Web GUI profile); the command forwards to pnpm in the profile directory.
+
+2. Mount the plugin in `cordis.patch.yml`:
 
 ```yaml
 - insert:
@@ -15,7 +23,29 @@ DeepSeek Harness **Settings Pro** plugin — one package, five features: **IM Br
       config: {}
 ```
 
-2. Open the Web GUI → **Settings Pro**, and flip on whatever you want — all together, a few, or one at a time. Everything is off by default, so nothing runs until you opt in, and every toggle is live (no restart).
+3. Restart DSH so the new plugin loads.
+
+4. Open the Web GUI → **Settings Pro**, and flip on whatever you want — all together, a few, or one at a time. Everything is off by default, so nothing runs until you opt in, and every toggle is live (no restart).
+
+## Install & enable with one prompt
+
+DSH's agent has file access, so you don't have to install or edit anything by hand — paste one prompt and it does both steps. Replace the `[...]` list with the features you want:
+
+```text
+Install the @kazecreator/dsh-settings-pro plugin into this DSH profile and enable these features: [usage, memory, pets, vision, telegram, wechat]. Keep anything I didn't list disabled.
+
+1. Install the package: run `dsh plugin --profile <profile> add @kazecreator/dsh-settings-pro` (or `pnpm add @kazecreator/dsh-settings-pro` in the profile directory).
+2. Add an `insert` entry for plugin id `dsh-settings-pro` (name `@kazecreator/dsh-settings-pro`) to the profile's `cordis.patch.yml`, and in its `config` turn on only the features I named:
+   - usage    → `usageEnabled: true`
+   - memory   → `memoryEnabled: true`
+   - pets     → `petsEnabled: true`
+   - vision   → `visionEnabled: true` (plus `visionBaseUrl`, `visionModel`, `visionApiKeyEnv` — ask me for these if I didn't give them)
+   - telegram → `telegramEnabled: true` (plus `telegramBotToken`, `telegramAllowedUserIds` — ask me for these if I didn't give them)
+   - wechat   → `wechatEnabled: true`
+3. Restart DSH so the new plugin loads.
+```
+
+The agent installs the package, writes the patch, sets exactly the `*Enabled` keys you named, and leaves everything else off. After a restart the features run; from then on you can still flip any toggle live in **Settings Pro**.
 
 ## Features
 

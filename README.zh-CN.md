@@ -61,7 +61,7 @@ agent 会安装包、写好 patch、只把你点名的 `*Enabled` 键设为开�
 
 ## 说明
 
-- **更新**：插件启动时与设置页打开时检查 npm registry；发现新版本时，设置 Pro 顶部显示横幅，提供「更新并重启」按钮（在 profile 目录执行 `pnpm add @kazecreator/dsh-settings-pro@latest` 并重启 dsh 进程）。若插件以 `file:` 链接安装（本地开发目录），按钮隐藏并提示手动更新。
+- **更新**：插件每天检查一次 npm registry（启动时与设置页打开时，24 小时内复用缓存）。发现新版本时，「设置 Pro」导航项右侧出现 **NEW** 徽标；**「关于」**tab（最后一个 tab）展示插件信息、当前/最新版本、手动「检查更新」，并在 registry 安装且存在新版本时提供「更新并重启」按钮（在 profile 目录执行 `pnpm add @kazecreator/dsh-settings-pro@latest` 并重启 dsh 进程）。若插件以 `file:` 链接安装（本地开发目录），更新按钮隐藏，「关于」tab 会提示手动更新。
 - **用量「自动同步」读取 Chromium 浏览器会话**（macOS / Windows / Linux 上的 Chrome / Edge / Brave / Arc / Opera）来同步官方计费用量；Firefox / Safari 不支持。
 - **桌面宠物 App 不随包分发。** 默认「网页」打开模式在浏览器标签页打开 `/pet`，无需额外安装；「App」模式需要另行安装独立的 Electron 桌面宠物应用（源码仓库里的 `pet-desktop/` 目录），npm 包不包含它。
 - **在线宠物库从 GitHub 拉取**——[Awesome Codex Pet](https://codexpet.top) 社区画廊，作者 [@legeling](https://github.com/legeling/awesome-codex-pet)。感谢该项目及每一位宠物作者的开放投稿。本地有缓存，网络失败时回退到缓存/离线提示。

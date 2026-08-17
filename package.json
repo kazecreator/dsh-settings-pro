@@ -1,6 +1,6 @@
 {
   "name": "@kazecreator/dsh-settings-pro",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "DeepSeek Harness settings-pro plugin: IM bridge (Telegram/WeChat), DeepSeek usage, cross-restart memory, desktop pets, and a vision bridge",
   "keywords": [
     "dsh",

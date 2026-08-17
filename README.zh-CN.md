@@ -2,32 +2,11 @@
 
 [English](README.md) · [中文](README.zh-CN.md)
 
-DeepSeek Harness「设置 Pro」插件。单个包把五个功能塞进一个设置分区：
+DeepSeek Harness「设置 Pro」插件——一个包、五个功能：**IM Bridge**、**用量**、**记忆**、**宠物**、**视觉**。
 
-- **IM Bridge** — Telegram & 微信桥接（已并入 `@kazecreator/dsh-settings-pro`，原 `@kazecreator/dsh-im` 已归档），带内置 `IM Bridge` 标签页。
-- **用量 (Usage)** — 通过 `/user/balance` 查询 DeepSeek 余额 + 平台计费的每日用量（峰谷计价）。
-- **记忆 (Memory)** — 跨重启对话记忆：新会话自动注入摘要 + `read_memory`/`write_memory` 工具。
-- **宠物 (Pets)** — 桌面宠物悬浮层 + 被动进度监控，开启后跟随对话。
-- **视觉 (Vision)** — 在纯文本模型看到图片前，先用任意 OpenAI 兼容的 VLM 把图片描述成文本。
+## 快速上手
 
-## 默认全关
-
-全新安装**默认不启用任何功能**，需要你逐项开启。这是刻意的：你可以先开一个功能、确认没问题、再开下一个——半配置状态下插件不会启动网络轮询、注册工具或写入记忆。
-
-| 功能 | 配置键 | 开启方式 | 需要重启？ |
-|---|---|---|---|
-| 用量 | `usageEnabled` | 面板开关（持久化） | 否 |
-| 记忆 | `memoryEnabled` | 面板开关（持久化） | 否 |
-| 宠物 | `petsEnabled` | 面板开关（持久化） | 否 |
-| 视觉 | `visionEnabled` | 面板（持久化） | 否 |
-| Telegram | `telegramEnabled` + `telegramBotToken` | 面板（持久化） | 否 |
-| 微信 | `wechatEnabled` | 面板扫码（持久化） | 否 |
-
-六项都能在 Web GUI 的「设置 Pro」面板里实时开关——无需改 `cordis.patch.yml`、无需重启。`*Enabled` 配置键仍可作为安装时的初始状态（想给某个 profile 预开启某项时用）。
-
-## 安装
-
-加到 profile 的 `package.json` 依赖里，再插入 `cordis.patch.yml`。最小（全关）配置：
+1. 在 `cordis.patch.yml` 里挂载插件：
 
 ```yaml
 - insert:
@@ -36,21 +15,19 @@ DeepSeek Harness「设置 Pro」插件。单个包把五个功能塞进一个设
       config: {}
 ```
 
-可选地在安装时预开启某项：
+2. 打开 Web GUI →「设置 Pro」，把想要的功能打开即可——可以全开、开几个、或只开一个。默认全关，开了才运行，而且所有开关都是即时生效（无需重启）。
 
-```yaml
-      config:
-        usageEnabled: true
-        memoryEnabled: true
-```
+## 功能一览
 
-## 一次开一个功能
+| 功能 | 作用 | 开启方式 |
+|---|---|---|
+| **用量** | DeepSeek 余额 + 每日成本/tokens（峰谷计价） | 设置 Pro → **用量** → 开关 |
+| **记忆** | 跨重启记忆 + `read_memory` / `write_memory` 工具 | 设置 Pro → **记忆** → 开关 |
+| **宠物** | 跟随对话的桌面宠物 | 设置 Pro → **宠物** → 开关 |
+| **视觉** | 在纯文本模型看图片前，先用任意 OpenAI 兼容 VLM 描述图片 | 设置 Pro → **视觉** → 启用 + 选模型 |
+| **IM Bridge** | Telegram & 微信桥接（并入自 `@kazecreator/dsh-im`，已归档） | 设置 Pro → **IM Bridge** → token / 扫码 |
 
-1. **用量** — 在「设置 Pro → 用量」里点开关。没配 `DEEPSEEK_API_KEY` 时面板仍能正常加载，显示「未配置 DEEPSEEK_API_KEY」而不是报错。
-2. **记忆** — 在「设置 Pro → 记忆」里点开关。`read_memory`/`write_memory` 工具随即生效，「记忆」标签页开始填充。
-3. **宠物** — 在「设置 Pro → 宠物」里点开关。安装内置 / Codex / zip 宠物。
-4. **视觉** — 在「设置 Pro → 视觉」里点「启用」，选 provider/model，保存。
-5. **IM Bridge** — 在「设置 Pro → IM Bridge」里粘贴 Telegram bot token（连接）、扫描微信二维码（连接）。每个通道在拿到 token/扫码之前都保持惰性。
+`*Enabled` 配置键（`usageEnabled`、`memoryEnabled`、`petsEnabled`、`visionEnabled`、`telegramEnabled`、`wechatEnabled`）也能作为安装时的初始状态，想给某个 profile 预开启某项时用。
 
 ## 说明
 

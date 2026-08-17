@@ -2,32 +2,11 @@
 
 [English](README.md) · [中文](README.zh-CN.md)
 
-DeepSeek Harness **Settings Pro** plugin. A single package bundling five features into one settings section:
+DeepSeek Harness **Settings Pro** plugin — one package, five features: **IM Bridge**, **Usage**, **Memory**, **Pets**, and **Vision**.
 
-- **IM Bridge** — Telegram & WeChat bridge (merged from `@kazecreator/dsh-im`, now archived), with a built-in `IM Bridge` tab.
-- **Usage** — DeepSeek balance via `/user/balance` + platform-billed daily usage with peak/off-peak pricing.
-- **Memory** — cross-restart conversation memory: summary auto-injected into new sessions + `read_memory`/`write_memory` tools.
-- **Pets** — desktop pet overlay + passive progress monitor that follows conversations when enabled.
-- **Vision** — describe images via any OpenAI-compatible VLM before a text-only model sees them.
+## Quick start
 
-## Everything is off by default
-
-A fresh install enables **nothing** until you opt in, feature by feature. This is intentional: you can turn on one feature, verify it works, then turn on the next — a half-configured plugin never starts network polling, registers tools, or writes memory.
-
-| Feature | Config key | How to enable | Needs restart? |
-|---|---|---|---|
-| Usage | `usageEnabled` | panel toggle (persisted) | no |
-| Memory | `memoryEnabled` | panel toggle (persisted) | no |
-| Pets | `petsEnabled` | panel toggle (persisted) | no |
-| Vision | `visionEnabled` | panel (persisted) | no |
-| Telegram | `telegramEnabled` + `telegramBotToken` | panel (persisted) | no |
-| WeChat | `wechatEnabled` | panel scan (persisted) | no |
-
-All six are toggled live from the **Settings Pro** panel in the Web GUI — no `cordis.patch.yml` editing or restart required. The `*Enabled` config keys still work as the initial (install-time) state if you want to pre-enable a feature for a profile.
-
-## Install
-
-Add to the profile's `package.json` dependencies and insert into `cordis.patch.yml`. The minimal (all-off) config is:
+1. Mount the plugin in `cordis.patch.yml`:
 
 ```yaml
 - insert:
@@ -36,21 +15,19 @@ Add to the profile's `package.json` dependencies and insert into `cordis.patch.y
       config: {}
 ```
 
-Optionally pre-enable a feature at install time:
+2. Open the Web GUI → **Settings Pro**, and flip on whatever you want — all together, a few, or one at a time. Everything is off by default, so nothing runs until you opt in, and every toggle is live (no restart).
 
-```yaml
-      config:
-        usageEnabled: true
-        memoryEnabled: true
-```
+## Features
 
-## Enable one feature at a time
+| Feature | What it does | How to enable |
+|---|---|---|
+| **Usage** | DeepSeek balance + daily cost/tokens (peak/off-peak pricing) | Settings Pro → **Usage** → toggle |
+| **Memory** | Cross-restart memory + `read_memory` / `write_memory` tools | Settings Pro → **Memory** → toggle |
+| **Pets** | Desktop pet that follows conversations | Settings Pro → **Pets** → toggle |
+| **Vision** | Describe images via any OpenAI-compatible VLM before a text-only model sees them | Settings Pro → **Vision** → enable + pick model |
+| **IM Bridge** | Telegram & WeChat bridge (merged from `@kazecreator/dsh-im`, archived) | Settings Pro → **IM Bridge** → token / QR |
 
-1. **Usage** — flip the toggle in **Settings Pro → Usage**. Without `DEEPSEEK_API_KEY` configured, the panel still loads and reports "DEEPSEEK_API_KEY not configured" rather than failing.
-2. **Memory** — flip the toggle in **Settings Pro → Memory**. The `read_memory`/`write_memory` tools activate and the Memory tab populates.
-3. **Pets** — flip the toggle in **Settings Pro → Pets**. Install built-in / Codex / zip pets.
-4. **Vision** — flip **Enable** in **Settings Pro → Vision**, pick a provider/model, save.
-5. **IM Bridge** — in **Settings Pro → IM Bridge**, paste a Telegram bot token (connect) and scan the WeChat QR (connect). Each channel stays inert until its token/scan is present.
+The `*Enabled` config keys (`usageEnabled`, `memoryEnabled`, `petsEnabled`, `visionEnabled`, `telegramEnabled`, `wechatEnabled`) also work as install-time defaults if you want to pre-enable something for a profile.
 
 ## Notes
 

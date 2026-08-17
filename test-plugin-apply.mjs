@@ -4,7 +4,7 @@
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { apply } from "/Users/kevinzhang/.dsh/profiles/web/node_modules/@kazecreator/dsh-settings-pro/lib/index.js";
+import { apply } from "./lib/index.js";
 
 // Hermetic: point the plugin at a throwaway $DSH_HOME so this test never reads
 // or mutates real runtime state — no persisted pets toggle, no real Telegram /

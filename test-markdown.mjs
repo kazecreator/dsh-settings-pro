@@ -1,4 +1,4 @@
-import { markdownToTelegramHtml, markdownToPlainText } from "/Users/kevinzhang/.dsh/profiles/web/node_modules/@kazecreator/dsh-settings-pro/lib/markdown.js";
+import { markdownToTelegramHtml, markdownToPlainText } from "./lib/markdown.js";
 
 const samples = [
   ["heading h1-h6", "# Title\n## Section\n### Sub\n#### H4\n##### H5\n###### H6"],

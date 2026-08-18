@@ -64,7 +64,7 @@ function createPetWindow() {
     frame: false,
     transparent: true,
     backgroundColor: "#00000000",
-    resizable: true,
+    resizable: false,
     alwaysOnTop: true,
     hasShadow: false,
     skipTaskbar: true,

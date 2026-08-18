@@ -26,11 +26,43 @@ function openDsh(mode) {
   const m = String(mode || DSH_OPEN_MODE).toLowerCase();
   const useApp = m === "app" || m === "pwa";
   if (!useApp || process.platform !== "darwin") {
-    shell.openExternal(DSH_URL).catch(() => {});
+    focusOrOpenBrowser(DSH_URL);
     return;
   }
   execFile("open", ["-a", DSH_APP_NAME], (err) => {
-    if (err) shell.openExternal(DSH_URL).catch(() => {});
+    if (err) focusOrOpenBrowser(DSH_URL);
+  });
+}
+
+// Browser mode: focus an existing DSH tab instead of opening a fresh one each
+// time. Chrome-first; any failure falls back to just opening the URL.
+function focusOrOpenBrowser(url) {
+  if (process.platform !== "darwin") {
+    shell.openExternal(url).catch(() => {});
+    return;
+  }
+  const script = [
+    'set targetURL to "' + url + '"',
+    'tell application "Google Chrome"',
+    "  set foundIt to false",
+    "  repeat with w in windows",
+    "    set n to count of tabs of w",
+    "    repeat with i from 1 to n",
+    "      if (URL of tab i of w) starts with targetURL then",
+    "        set active tab index of w to i",
+    "        set index of w to 1",
+    "        set foundIt to true",
+    "        exit repeat",
+    "      end if",
+    "    end repeat",
+    "    if foundIt then exit repeat",
+    "  end repeat",
+    "  if not foundIt then open location targetURL",
+    "  activate",
+    "end tell",
+  ].join("\n");
+  execFile("osascript", ["-e", script], (err) => {
+    if (err) shell.openExternal(url).catch(() => {});
   });
 }
 

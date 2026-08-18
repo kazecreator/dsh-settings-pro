@@ -75,23 +75,9 @@ agent 会安装包、写好 patch、只把你点名的 `*Enabled` 键设为开�
 
 ## 桌面宠物 App（可选，Electron）
 
-「网页」打开模式无需安装——直接在浏览器标签页打开 `/pet`。想要一个真正悬浮在桌面、置顶、可拖拽、点击能回到 DSH 的小窗口宠物，就用「App」模式 + 这个独立的 Electron 桌面应用（它不在 npm 包里）。
+「网页」打开模式无需安装——直接在浏览器标签页打开 `/pet`。想要一个真正悬浮在桌面、置顶、可拖拽、点击能回到 DSH 的小窗口宠物，就用「App」模式：打开 **设置 Pro → 宠物**，在「桌面应用」卡片点 **安装**，插件会在本地装好 Electron 并启动宠物窗口；安装状态会持久化，关掉设置再进来也能看到「运行中 / 已安装」等状态。
 
-最省事：直接去 [GitHub Releases](https://github.com/kazecreator/dsh-settings-pro/releases) 下载对应平台的安装包（`.dmg` / `.exe` / `.AppImage`），无需本地构建。想要自己构建才走下面步骤：
-
-```bash
-# 1. 取源码仓库里的 pet-desktop/ 目录
-git clone https://github.com/kazecreator/dsh-settings-pro.git
-cd dsh-settings-pro/pet-desktop
-
-# 2. 安装依赖（Electron）
-npm install
-
-# 3. 启动宠物窗口
-npm start
-```
-
-启动前请确认：DSH 正在运行（默认 `http://127.0.0.1:3080`）；「设置 Pro → 宠物」已开启宠物，且打开模式设为「App」。
+不想用一键安装，也可手动跑源码仓库里的 `pet-desktop/`：`cd pet-desktop && npm install && npm start`。
 
 可选环境变量（默认值如下）：
 
@@ -100,20 +86,9 @@ npm start
 - `DSH_OPEN_MODE` — 点击宠物打开 DSH 的方式：`browser`（默认）或 `app`
 - `DSH_APP_NAME` — macOS 上「App」打开模式所用 Chrome PWA 的应用名，默认 `DeepSeek Harness`
 
-打包成安装包（可选）：
-
-```bash
-npm run dist        # 打当前平台
-npm run dist:mac    # macOS .dmg / .zip
-npm run dist:win    # Windows .exe
-npm run dist:linux  # Linux AppImage
-```
-
-产物在 `dist/`。macOS 未签名，首次打开需在「系统设置 → 隐私与安全性」点「仍要打开」。
-
 ## 说明
 
 - **更新**：插件每天检查一次 npm registry（启动时与设置页打开时，24 小时内复用缓存）。发现新版本时，「设置 Pro」导航项右侧出现 **NEW** 徽标；**「关于」**tab（最后一个 tab）展示插件信息、当前/最新版本、手动「检查更新」，并在 registry 安装且存在新版本时提供「更新并重启」按钮（在 profile 目录执行 `pnpm add @kazecreator/dsh-settings-pro@latest` 并重启 dsh 进程）。若插件以 `file:` 链接安装（本地开发目录），更新按钮隐藏，「关于」tab 会显示「安装方式：本地开发（file:）」行。
 - **用量「自动同步」读取 Chromium 浏览器会话**（macOS / Windows / Linux 上的 Chrome / Edge / Brave / Arc / Opera）来同步官方计费用量；Firefox / Safari 不支持。
-- **桌面宠物 App 不随包分发。** 默认「网页」打开模式在浏览器标签页打开 `/pet`，无需额外安装；「App」模式需要另行安装独立的 Electron 桌面宠物应用（源码仓库里的 `pet-desktop/` 目录），npm 包不包含它。安装步骤见上文「桌面宠物 App」一节。
+- **桌面宠物 App 不随包分发。** 默认「网页」打开模式在浏览器标签页打开 `/pet`，无需额外安装；「App」模式用「设置 Pro → 宠物 → 桌面应用」的一键安装按钮本地安装并启动 Electron 宠物窗口，安装状态持久化。也可手动运行源码仓库里的 `pet-desktop/`（`npm install && npm start`）。
 - **在线宠物库从 GitHub 拉取**——[Awesome Codex Pet](https://codexpet.top) 社区画廊，作者 [@legeling](https://github.com/legeling/awesome-codex-pet)。感谢该项目及每一位宠物作者的开放投稿。本地有缓存，网络失败时回退到缓存/离线提示。

@@ -75,23 +75,9 @@ The `*Enabled` config keys (`usageEnabled`, `memoryEnabled`, `petsEnabled`, `vis
 
 ## Desktop pet app (optional, Electron)
 
-The "browser" open mode needs no install — it opens `/pet` in a browser tab. For a real always-on-top, draggable floating pet window that clicks back to DSH, use "App" mode plus this standalone Electron app (not in the npm package).
+The "browser" open mode needs no install — it opens `/pet` in a browser tab. For a real always-on-top, draggable floating pet window that clicks back to DSH, use "App" mode: open **Settings Pro → Pets**, hit **Install** in the **Desktop app** card, and the plugin installs Electron locally and launches the pet window. Install state persists, so reopening settings still shows **Running / Installed** etc.
 
-Easiest: download the ready-made installer for your platform from [GitHub Releases](https://github.com/kazecreator/dsh-settings-pro/releases) (`.dmg` / `.exe` / `.AppImage`) — no local build needed. Build it yourself only if you prefer:
-
-```bash
-# 1. Get the pet-desktop/ folder from the source repo
-git clone https://github.com/kazecreator/dsh-settings-pro.git
-cd dsh-settings-pro/pet-desktop
-
-# 2. Install Electron
-npm install
-
-# 3. Launch the pet window
-npm start
-```
-
-Before launching, make sure DSH is running (default `http://127.0.0.1:3080`), pets are enabled in **Settings Pro → Pets**, and the open mode is set to **App**.
+Prefer manual? Run the source repo's `pet-desktop/`: `cd pet-desktop && npm install && npm start`.
 
 Optional env vars (defaults shown):
 
@@ -100,20 +86,9 @@ Optional env vars (defaults shown):
 - `DSH_OPEN_MODE` — how the pet opens DSH on click: `browser` (default) or `app`
 - `DSH_APP_NAME` — macOS Chrome PWA app name for the "app" open mode, default `DeepSeek Harness`
 
-Package it into an installer (optional):
-
-```bash
-npm run dist        # current platform
-npm run dist:mac    # macOS .dmg / .zip
-npm run dist:win    # Windows .exe
-npm run dist:linux  # Linux AppImage
-```
-
-Output lands in `dist/`. macOS builds are unsigned — first launch needs "Open Anyway" in System Settings → Privacy & Security.
-
 ## Notes
 
 - **Updates:** Settings Pro checks the npm registry once a day (at startup and when the settings section opens, reusing a 24h cache). When a newer version exists, a **NEW** chip appears on the **Settings Pro** nav item; the **About** tab (last tab) shows plugin info, the installed/latest versions, a manual **Check for updates** action, and — only when an update exists on a registry install — an **Update & Restart** button (runs `pnpm add @kazecreator/dsh-settings-pro@latest` in the profile and relaunches the dsh process). If the plugin is installed as a `file:` link (local development checkout), the update button is hidden and the About tab shows the install mode as **Local dev (file:)**.
 - **Usage auto-sync reads a Chromium browser session** (Chrome / Edge / Brave / Arc / Opera on macOS / Windows / Linux) to backfill official billed usage. Firefox / Safari aren't supported.
-- **Pet desktop app is not bundled.** The default "browser" open mode opens `/pet` in a browser tab with no extra install. The "app" mode needs the separate Electron desktop-pet app (the `pet-desktop/` folder in the source repo), which is not part of the npm package. See **Desktop pet app** above for install steps.
+- **Pet desktop app is not bundled.** The default "browser" open mode opens `/pet` in a browser tab with no extra install. The "app" mode uses the one-click **Install** button in **Settings Pro → Pets → Desktop app**, which installs and launches the Electron pet window locally with persistent state. You can also run the source repo's `pet-desktop/` manually (`npm install && npm start`).
 - **The online pet library fetches from GitHub** — the [Awesome Codex Pet](https://codexpet.top) community gallery by [@legeling](https://github.com/legeling/awesome-codex-pet). Thanks to that project and every pet author for the open submissions. It caches locally and degrades to the cache/offline notice on network failure.

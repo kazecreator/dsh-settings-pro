@@ -73,9 +73,34 @@ agent 会安装包、写好 patch、只把你点名的 `*Enabled` 键设为开�
 
 `*Enabled` 配置键（`usageEnabled`、`memoryEnabled`、`petsEnabled`、`visionEnabled`、`telegramEnabled`、`wechatEnabled`）也能作为安装时的初始状态，想给某个 profile 预开启某项时用。
 
+## 桌面宠物 App（可选，Electron）
+
+「网页」打开模式无需安装——直接在浏览器标签页打开 `/pet`。想要一个真正悬浮在桌面、置顶、可拖拽、点击能回到 DSH 的小窗口宠物，就用「App」模式 + 这个独立的 Electron 桌面应用（它不在 npm 包里，需要从源码仓库取）：
+
+```bash
+# 1. 取源码仓库里的 pet-desktop/ 目录
+git clone https://github.com/kazecreator/dsh-settings-pro.git
+cd dsh-settings-pro/pet-desktop
+
+# 2. 安装依赖（Electron）
+npm install
+
+# 3. 启动宠物窗口
+npm start
+```
+
+启动前请确认：DSH 正在运行（默认 `http://127.0.0.1:3080`）；「设置 Pro → 宠物」已开启宠物，且打开模式设为「App」。
+
+可选环境变量（默认值如下）：
+
+- `DSH_PET_URL` — 宠物页面地址，默认 `http://127.0.0.1:3080/pet`
+- `DSH_URL` — 点击宠物时打开的 DSH 地址，默认 `http://127.0.0.1:3080`
+- `DSH_OPEN_MODE` — 点击宠物打开 DSH 的方式：`browser`（默认）或 `app`
+- `DSH_APP_NAME` — macOS 上「App」打开模式所用 Chrome PWA 的应用名，默认 `DeepSeek Harness`
+
 ## 说明
 
 - **更新**：插件每天检查一次 npm registry（启动时与设置页打开时，24 小时内复用缓存）。发现新版本时，「设置 Pro」导航项右侧出现 **NEW** 徽标；**「关于」**tab（最后一个 tab）展示插件信息、当前/最新版本、手动「检查更新」，并在 registry 安装且存在新版本时提供「更新并重启」按钮（在 profile 目录执行 `pnpm add @kazecreator/dsh-settings-pro@latest` 并重启 dsh 进程）。若插件以 `file:` 链接安装（本地开发目录），更新按钮隐藏，「关于」tab 会显示「安装方式：本地开发（file:）」行。
 - **用量「自动同步」读取 Chromium 浏览器会话**（macOS / Windows / Linux 上的 Chrome / Edge / Brave / Arc / Opera）来同步官方计费用量；Firefox / Safari 不支持。
-- **桌面宠物 App 不随包分发。** 默认「网页」打开模式在浏览器标签页打开 `/pet`，无需额外安装；「App」模式需要另行安装独立的 Electron 桌面宠物应用（源码仓库里的 `pet-desktop/` 目录），npm 包不包含它。
+- **桌面宠物 App 不随包分发。** 默认「网页」打开模式在浏览器标签页打开 `/pet`，无需额外安装；「App」模式需要另行安装独立的 Electron 桌面宠物应用（源码仓库里的 `pet-desktop/` 目录），npm 包不包含它。安装步骤见上文「桌面宠物 App」一节。
 - **在线宠物库从 GitHub 拉取**——[Awesome Codex Pet](https://codexpet.top) 社区画廊，作者 [@legeling](https://github.com/legeling/awesome-codex-pet)。感谢该项目及每一位宠物作者的开放投稿。本地有缓存，网络失败时回退到缓存/离线提示。

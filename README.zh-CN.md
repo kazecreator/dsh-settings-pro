@@ -31,6 +31,8 @@ dsh plugin --profile <name> add @kazecreator/dsh-settings-pro
 
 这段 prompt 完全替代上面的[「快速上手」](#快速上手)——**不需要**先做那几步。DSH 的 agent 有文件读写权限，直接粘贴下面这段 prompt，把 `[...]` 换成你想要的功能即可，安装和开启它都会帮你做完：
 
+用量和记忆是可选的，默认关闭；不写进 `[...]` 就不会开启，只开启你点名的功能。
+
 ```text
 把 @kazecreator/dsh-settings-pro 插件安装进这个 DSH profile，并开启这些功能：[用量, 记忆, 宠物, 视觉, telegram, wechat]。我没列出的功能一律保持关闭。
 
@@ -49,7 +51,7 @@ agent 会安装包、写好 patch、只把你点名的 `*Enabled` 键设为开�
 
 ### 推荐最小配置
 
-不想自己选？直接粘贴这个开箱即用版本——它开启无需额外配置的核心功能（**用量**、**记忆**、**宠物**），并保持 **IM**（Telegram/微信）与 **视觉** 关闭（它们需要额外 token/端点，默认 `false` / 空）：
+不想自己选？直接粘贴这个开箱即用版本——它开启无需额外配置的核心功能（**用量**、**记忆**、**宠物**；三者都可选、默认关闭），并保持 **IM**（Telegram/微信）与 **视觉** 关闭（它们需要额外 token/端点，默认 `false` / 空）：
 
 ```text
 把 @kazecreator/dsh-settings-pro 插件安装进这个 DSH profile，并按推荐最小配置开启：用量、记忆、宠物；保持 telegram、wechat、视觉关闭。
@@ -59,7 +61,7 @@ agent 会安装包、写好 patch、只把你点名的 `*Enabled` 键设为开�
 3. 重启 DSH，让新插件加载。
 ```
 
-之后你仍可在「设置 Pro」里随时开启 IM 或视觉——在此之前它们保持关闭（false / 空）。
+之后你仍可在「设置 Pro」里随时开启 IM 或视觉——在此之前它们保持关闭（false / 空）。用量和记忆同样可选、默认关闭；只要宠物的话，配置里写 `petsEnabled: true` 即可，其它 `*Enabled` 都不写。
 
 ## 功能一览
 

@@ -31,6 +31,8 @@ dsh plugin --profile <name> add @kazecreator/dsh-settings-pro
 
 This replaces the whole [Quick start](#quick-start) above — you do **not** need to do those steps first. DSH's agent has file access, so just paste one prompt and it does both install and enable for you. Replace the `[...]` list with the features you want:
 
+Usage and Memory are optional and off by default, so you can leave them out of the list entirely — only the features you name get enabled.
+
 ```text
 Install the @kazecreator/dsh-settings-pro plugin into this DSH profile and enable these features: [usage, memory, pets, vision, telegram, wechat]. Keep anything I didn't list disabled.
 
@@ -49,7 +51,7 @@ The agent installs the package, writes the patch, sets exactly the `*Enabled` ke
 
 ### Recommended minimal config
 
-Don't want to pick? Paste this ready-to-use version — it enables the self-contained core (**Usage**, **Memory**, **Pets**) and keeps **IM** (Telegram/WeChat) and **Vision** off, since they need extra tokens/endpoints and default to `false` / empty:
+Don't want to pick? Paste this ready-to-use version — it enables the self-contained core (**Usage**, **Memory**, **Pets**; all three are optional and off by default) and keeps **IM** (Telegram/WeChat) and **Vision** off, since they need extra tokens/endpoints and default to `false` / empty:
 
 ```text
 Install the @kazecreator/dsh-settings-pro plugin into this DSH profile with the recommended minimal config: enable usage, memory, and pets; keep telegram, wechat, and vision disabled.
@@ -59,7 +61,7 @@ Install the @kazecreator/dsh-settings-pro plugin into this DSH profile with the 
 3. Restart DSH so the new plugin loads.
 ```
 
-You can enable IM or Vision later from **Settings Pro** — they stay off (`false` / empty) until then.
+You can enable IM or Vision later from **Settings Pro** — they stay off (`false` / empty) until then. Usage and Memory work the same way: they're optional and default to off, and a pets-only setup just needs `petsEnabled: true` in the config.
 
 ## Features
 

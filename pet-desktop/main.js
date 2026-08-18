@@ -6,6 +6,7 @@ const path = require("path");
 // transparent area white when the pet overlaps another GPU surface (notably
 // Chrome). Disabling HW acceleration keeps the window truly transparent.
 app.disableHardwareAcceleration();
+app.commandLine.appendSwitch("disable-gpu-compositing");
 
 // Harness serves the draggable pet page at /pet (same-origin fetch of
 // /settings-pro/pets, so no CORS). Override with DSH_PET_URL if needed.

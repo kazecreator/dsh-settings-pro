@@ -2,6 +2,11 @@ const { app, BrowserWindow, ipcMain, screen, shell } = require("electron");
 const { execFile } = require("child_process");
 const path = require("path");
 
+// Software-render the transparent window: GPU-accelerated compositing turns the
+// transparent area white when the pet overlaps another GPU surface (notably
+// Chrome). Disabling HW acceleration keeps the window truly transparent.
+app.disableHardwareAcceleration();
+
 // Harness serves the draggable pet page at /pet (same-origin fetch of
 // /settings-pro/pets, so no CORS). Override with DSH_PET_URL if needed.
 const PET_URL = process.env.DSH_PET_URL || "http://127.0.0.1:3080/pet";
@@ -122,6 +127,11 @@ function createPetWindow() {
 }
 
 app.whenReady().then(() => {
+  // The process runs as Electron's own binary (the wrapper .app just execs it),
+  // so without this the Dock keeps showing Electron's default icon.
+  if (process.platform === "darwin" && app.dock && typeof app.dock.setIcon === "function") {
+    try { app.dock.setIcon(path.join(__dirname, "electron.icns")); } catch { /* keep default if missing */ }
+  }
   ipcMain.on("open-dsh", (_event, mode) => openDsh(mode));
   ipcMain.on("pet-drag-start", () => startDrag());
   ipcMain.on("pet-drag-end", () => endDrag());

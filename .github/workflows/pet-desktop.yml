@@ -6,6 +6,10 @@ on:
       - "pet-v*"
   workflow_dispatch:
 
+permissions:
+  contents: write
+  actions: write
+
 jobs:
   build:
     strategy:

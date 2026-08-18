@@ -75,7 +75,9 @@ agent 会安装包、写好 patch、只把你点名的 `*Enabled` 键设为开�
 
 ## 桌面宠物 App（可选，Electron）
 
-「网页」打开模式无需安装——直接在浏览器标签页打开 `/pet`。想要一个真正悬浮在桌面、置顶、可拖拽、点击能回到 DSH 的小窗口宠物，就用「App」模式 + 这个独立的 Electron 桌面应用（它不在 npm 包里，需要从源码仓库取）：
+「网页」打开模式无需安装——直接在浏览器标签页打开 `/pet`。想要一个真正悬浮在桌面、置顶、可拖拽、点击能回到 DSH 的小窗口宠物，就用「App」模式 + 这个独立的 Electron 桌面应用（它不在 npm 包里）。
+
+最省事：直接去 [GitHub Releases](https://github.com/kazecreator/dsh-settings-pro/releases) 下载对应平台的安装包（`.dmg` / `.exe` / `.AppImage`），无需本地构建。想要自己构建才走下面步骤：
 
 ```bash
 # 1. 取源码仓库里的 pet-desktop/ 目录

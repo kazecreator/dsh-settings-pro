@@ -75,7 +75,9 @@ The `*Enabled` config keys (`usageEnabled`, `memoryEnabled`, `petsEnabled`, `vis
 
 ## Desktop pet app (optional, Electron)
 
-The "browser" open mode needs no install — it opens `/pet` in a browser tab. For a real always-on-top, draggable floating pet window that clicks back to DSH, use "App" mode plus this standalone Electron app (not in the npm package — get it from the source repo):
+The "browser" open mode needs no install — it opens `/pet` in a browser tab. For a real always-on-top, draggable floating pet window that clicks back to DSH, use "App" mode plus this standalone Electron app (not in the npm package).
+
+Easiest: download the ready-made installer for your platform from [GitHub Releases](https://github.com/kazecreator/dsh-settings-pro/releases) (`.dmg` / `.exe` / `.AppImage`) — no local build needed. Build it yourself only if you prefer:
 
 ```bash
 # 1. Get the pet-desktop/ folder from the source repo

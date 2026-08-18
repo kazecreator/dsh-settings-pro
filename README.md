@@ -47,6 +47,20 @@ Install the @kazecreator/dsh-settings-pro plugin into this DSH profile and enabl
 
 The agent installs the package, writes the patch, sets exactly the `*Enabled` keys you named, and leaves everything else off. After a restart the features run; from then on you can still flip any toggle live in **Settings Pro**.
 
+### Recommended minimal config
+
+Don't want to pick? Paste this ready-to-use version — it enables the self-contained core (**Usage**, **Memory**, **Pets**) and keeps **IM** (Telegram/WeChat) and **Vision** off, since they need extra tokens/endpoints and default to `false` / empty:
+
+```text
+Install the @kazecreator/dsh-settings-pro plugin into this DSH profile with the recommended minimal config: enable usage, memory, and pets; keep telegram, wechat, and vision disabled.
+
+1. Install the package: run `dsh plugin --profile <profile> add @kazecreator/dsh-settings-pro` (or `pnpm add @kazecreator/dsh-settings-pro` in the profile directory).
+2. Add an `insert` entry for plugin id `dsh-settings-pro` (name `@kazecreator/dsh-settings-pro`) to the profile's `cordis.patch.yml`, and in its `config` set `usageEnabled: true`, `memoryEnabled: true`, and `petsEnabled: true`. Leave `telegramEnabled`, `wechatEnabled`, and `visionEnabled` unset so they stay `false` (vision's `visionBaseUrl` / `visionModel` / `visionApiKeyEnv` stay empty).
+3. Restart DSH so the new plugin loads.
+```
+
+You can enable IM or Vision later from **Settings Pro** — they stay off (`false` / empty) until then.
+
 ## Features
 
 | Feature | What it does | How to enable |
@@ -61,7 +75,7 @@ The `*Enabled` config keys (`usageEnabled`, `memoryEnabled`, `petsEnabled`, `vis
 
 ## Notes
 
-- **Updates:** Settings Pro checks the npm registry once a day (at startup and when the settings section opens, reusing a 24h cache). When a newer version exists, a **NEW** chip appears on the **Settings Pro** nav item; the **About** tab (last tab) shows plugin info, the installed/latest versions, a manual **Check for updates** action, and — only when an update exists on a registry install — an **Update & Restart** button (runs `pnpm add @kazecreator/dsh-settings-pro@latest` in the profile and relaunches the dsh process). If the plugin is installed as a `file:` link (local development checkout), the update button is hidden and the About tab explains that updates are manual.
+- **Updates:** Settings Pro checks the npm registry once a day (at startup and when the settings section opens, reusing a 24h cache). When a newer version exists, a **NEW** chip appears on the **Settings Pro** nav item; the **About** tab (last tab) shows plugin info, the installed/latest versions, a manual **Check for updates** action, and — only when an update exists on a registry install — an **Update & Restart** button (runs `pnpm add @kazecreator/dsh-settings-pro@latest` in the profile and relaunches the dsh process). If the plugin is installed as a `file:` link (local development checkout), the update button is hidden and the About tab shows the install mode as **Local dev (file:)**.
 - **Usage auto-sync reads a Chromium browser session** (Chrome / Edge / Brave / Arc / Opera on macOS / Windows / Linux) to backfill official billed usage. Firefox / Safari aren't supported.
 - **Pet desktop app is not bundled.** The default "browser" open mode opens `/pet` in a browser tab with no extra install. The "app" mode needs the separate Electron desktop-pet app (the `pet-desktop/` folder in the source repo), which is not part of the npm package.
 - **The online pet library fetches from GitHub** — the [Awesome Codex Pet](https://codexpet.top) community gallery by [@legeling](https://github.com/legeling/awesome-codex-pet). Thanks to that project and every pet author for the open submissions. It caches locally and degrades to the cache/offline notice on network failure.

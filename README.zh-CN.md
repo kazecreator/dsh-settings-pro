@@ -47,6 +47,20 @@ dsh plugin --profile <name> add @kazecreator/dsh-settings-pro
 
 agent 会安装包、写好 patch、只把你点名的 `*Enabled` 键设为开启，其余全部关闭。重启后功能即生效；之后你仍可随时在「设置 Pro」里实时切换任意开关。
 
+### 推荐最小配置
+
+不想自己选？直接粘贴这个开箱即用版本——它开启无需额外配置的核心功能（**用量**、**记忆**、**宠物**），并保持 **IM**（Telegram/微信）与 **视觉** 关闭（它们需要额外 token/端点，默认 `false` / 空）：
+
+```text
+把 @kazecreator/dsh-settings-pro 插件安装进这个 DSH profile，并按推荐最小配置开启：用量、记忆、宠物；保持 telegram、wechat、视觉关闭。
+
+1. 安装包：在 profile 目录里运行 `dsh plugin --profile <profile> add @kazecreator/dsh-settings-pro`（或 `pnpm add @kazecreator/dsh-settings-pro`）。
+2. 在该 profile 的 `cordis.patch.yml` 里加一条 `insert`，插件 id 为 `dsh-settings-pro`（name 为 `@kazecreator/dsh-settings-pro`），并在其 `config` 里设置 `usageEnabled: true`、`memoryEnabled: true`、`petsEnabled: true`。`telegramEnabled`、`wechatEnabled`、`visionEnabled` 保持不写（默认 `false`，视觉的 `visionBaseUrl` / `visionModel` / `visionApiKeyEnv` 保持空）。
+3. 重启 DSH，让新插件加载。
+```
+
+之后你仍可在「设置 Pro」里随时开启 IM 或视觉——在此之前它们保持关闭（false / 空）。
+
 ## 功能一览
 
 | 功能 | 作用 | 开启方式 |
@@ -61,7 +75,7 @@ agent 会安装包、写好 patch、只把你点名的 `*Enabled` 键设为开�
 
 ## 说明
 
-- **更新**：插件每天检查一次 npm registry（启动时与设置页打开时，24 小时内复用缓存）。发现新版本时，「设置 Pro」导航项右侧出现 **NEW** 徽标；**「关于」**tab（最后一个 tab）展示插件信息、当前/最新版本、手动「检查更新」，并在 registry 安装且存在新版本时提供「更新并重启」按钮（在 profile 目录执行 `pnpm add @kazecreator/dsh-settings-pro@latest` 并重启 dsh 进程）。若插件以 `file:` 链接安装（本地开发目录），更新按钮隐藏，「关于」tab 会提示手动更新。
+- **更新**：插件每天检查一次 npm registry（启动时与设置页打开时，24 小时内复用缓存）。发现新版本时，「设置 Pro」导航项右侧出现 **NEW** 徽标；**「关于」**tab（最后一个 tab）展示插件信息、当前/最新版本、手动「检查更新」，并在 registry 安装且存在新版本时提供「更新并重启」按钮（在 profile 目录执行 `pnpm add @kazecreator/dsh-settings-pro@latest` 并重启 dsh 进程）。若插件以 `file:` 链接安装（本地开发目录），更新按钮隐藏，「关于」tab 会显示「安装方式：本地开发（file:）」行。
 - **用量「自动同步」读取 Chromium 浏览器会话**（macOS / Windows / Linux 上的 Chrome / Edge / Brave / Arc / Opera）来同步官方计费用量；Firefox / Safari 不支持。
 - **桌面宠物 App 不随包分发。** 默认「网页」打开模式在浏览器标签页打开 `/pet`，无需额外安装；「App」模式需要另行安装独立的 Electron 桌面宠物应用（源码仓库里的 `pet-desktop/` 目录），npm 包不包含它。
 - **在线宠物库从 GitHub 拉取**——[Awesome Codex Pet](https://codexpet.top) 社区画廊，作者 [@legeling](https://github.com/legeling/awesome-codex-pet)。感谢该项目及每一位宠物作者的开放投稿。本地有缓存，网络失败时回退到缓存/离线提示。

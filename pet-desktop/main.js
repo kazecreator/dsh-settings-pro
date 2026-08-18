@@ -63,10 +63,12 @@ function createPetWindow() {
     height: 170,
     frame: false,
     transparent: true,
+    backgroundColor: "#00000000",
     resizable: true,
     alwaysOnTop: true,
     hasShadow: false,
     skipTaskbar: true,
+    roundedCorners: false,
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,

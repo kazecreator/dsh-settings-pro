@@ -1,15 +1,12 @@
-const { app, BrowserWindow, ipcMain, screen, shell, nativeImage } = require("electron");
+const { app, BrowserWindow, ipcMain, screen, shell } = require("electron");
 const { execFile } = require("child_process");
 const path = require("path");
-
-const APP_NAME = "DSH Pet";
 
 // Software-render the transparent window: GPU-accelerated compositing turns the
 // transparent area white when the pet overlaps another GPU surface (notably
 // Chrome). Disabling HW acceleration keeps the window truly transparent.
 app.disableHardwareAcceleration();
 app.commandLine.appendSwitch("disable-gpu-compositing");
-app.setName(APP_NAME);
 
 // Harness serves the draggable pet page at /pet (same-origin fetch of
 // /settings-pro/pets, so no CORS). Override with DSH_PET_URL if needed.
@@ -122,12 +119,6 @@ function createPetWindow() {
   win.setAlwaysOnTop(true, "floating");
   win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 
-  // macOS transparent windows over GPU surfaces (Chrome) can composite the
-  // clear area as white. Forcing the window layer to <100% opacity routes it
-  // through a different compositing path that keeps the transparency intact.
-  win.setOpacity(0.99);
-  win.setBackgroundColor("#00000000");
-
   const load = () => {
     win.loadURL(PET_URL).catch(() => {
       setTimeout(load, 3000);
@@ -138,12 +129,9 @@ function createPetWindow() {
 
 app.whenReady().then(() => {
   // The process runs as Electron's own binary (the wrapper .app just execs it),
-  // so without this the Dock keeps showing Electron's name + default icon.
-  if (process.platform === "darwin" && app.dock) {
-    try {
-      const img = nativeImage.createFromPath(path.join(__dirname, "electron.icns"));
-      if (!img.isEmpty() && typeof app.dock.setIcon === "function") app.dock.setIcon(img);
-    } catch { /* keep default if missing */ }
+  // so without this the Dock keeps showing Electron's default icon.
+  if (process.platform === "darwin" && app.dock && typeof app.dock.setIcon === "function") {
+    try { app.dock.setIcon(path.join(__dirname, "electron.icns")); } catch { /* keep default if missing */ }
   }
   ipcMain.on("open-dsh", (_event, mode) => openDsh(mode));
   ipcMain.on("pet-drag-start", () => startDrag());

@@ -98,6 +98,17 @@ Optional env vars (defaults shown):
 - `DSH_OPEN_MODE` — how the pet opens DSH on click: `browser` (default) or `app`
 - `DSH_APP_NAME` — macOS Chrome PWA app name for the "app" open mode, default `DeepSeek Harness`
 
+Package it into an installer (optional):
+
+```bash
+npm run dist        # current platform
+npm run dist:mac    # macOS .dmg / .zip
+npm run dist:win    # Windows .exe
+npm run dist:linux  # Linux AppImage
+```
+
+Output lands in `dist/`. macOS builds are unsigned — first launch needs "Open Anyway" in System Settings → Privacy & Security.
+
 ## Notes
 
 - **Updates:** Settings Pro checks the npm registry once a day (at startup and when the settings section opens, reusing a 24h cache). When a newer version exists, a **NEW** chip appears on the **Settings Pro** nav item; the **About** tab (last tab) shows plugin info, the installed/latest versions, a manual **Check for updates** action, and — only when an update exists on a registry install — an **Update & Restart** button (runs `pnpm add @kazecreator/dsh-settings-pro@latest` in the profile and relaunches the dsh process). If the plugin is installed as a `file:` link (local development checkout), the update button is hidden and the About tab shows the install mode as **Local dev (file:)**.

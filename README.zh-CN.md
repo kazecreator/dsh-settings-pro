@@ -98,6 +98,17 @@ npm start
 - `DSH_OPEN_MODE` — 点击宠物打开 DSH 的方式：`browser`（默认）或 `app`
 - `DSH_APP_NAME` — macOS 上「App」打开模式所用 Chrome PWA 的应用名，默认 `DeepSeek Harness`
 
+打包成安装包（可选）：
+
+```bash
+npm run dist        # 打当前平台
+npm run dist:mac    # macOS .dmg / .zip
+npm run dist:win    # Windows .exe
+npm run dist:linux  # Linux AppImage
+```
+
+产物在 `dist/`。macOS 未签名，首次打开需在「系统设置 → 隐私与安全性」点「仍要打开」。
+
 ## 说明
 
 - **更新**：插件每天检查一次 npm registry（启动时与设置页打开时，24 小时内复用缓存）。发现新版本时，「设置 Pro」导航项右侧出现 **NEW** 徽标；**「关于」**tab（最后一个 tab）展示插件信息、当前/最新版本、手动「检查更新」，并在 registry 安装且存在新版本时提供「更新并重启」按钮（在 profile 目录执行 `pnpm add @kazecreator/dsh-settings-pro@latest` 并重启 dsh 进程）。若插件以 `file:` 链接安装（本地开发目录），更新按钮隐藏，「关于」tab 会显示「安装方式：本地开发（file:）」行。
